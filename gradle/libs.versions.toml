@@ -1,8 +1,8 @@
 [versions]
-agp = "8.12.0"
+agp = "8.12.2"
 appcompat = "1.7.1"
-firebaseBom = "34.1.0"
-kotlin = "2.2.0"
+firebaseBom = "34.2.0"
+kotlin = "2.2.10"
 google-firebase-crashlytics = "3.0.6"
 google-services = "4.4.3"
 multidex = "2.0.1"
