@@ -100,9 +100,14 @@ object SleepNotification {
             .setSubText(DateFormat.getTimeInstance(SHORT).format(Date(eta)))
             .setShowWhen(true)
             .setWhen(eta)
-            .setUsesChronometer(true)
-            .setChronometerCountDown(true)
-            .setTimeoutAfter(timeout)
+            .setUsesChronometer(true).apply {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    setChronometerCountDown(true)
+                }
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    setTimeoutAfter(timeout)
+                }
+            }
             .apply {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     setDeleteIntent(SleepAudioWorker.pendingIntent(this@show))
