@@ -38,6 +38,10 @@
         </service>
 
         <receiver
+            android:name=".receivers.SleepNotificationReceiver"
+            android:exported="false" />
+
+        <receiver
             android:name=".receivers.SleepAudioReceiver"
             android:exported="false">
             <intent-filter>

@@ -17,6 +17,8 @@ import com.d4rk.musicsleeptimer.plus.notifications.SleepNotification.Action.CANC
 import com.d4rk.musicsleeptimer.plus.notifications.SleepNotification.Action.DECREMENT
 import com.d4rk.musicsleeptimer.plus.notifications.SleepNotification.Action.INCREMENT
 import com.d4rk.musicsleeptimer.plus.workers.SleepAudioWorker
+import androidx.annotation.RequiresApi
+import com.d4rk.musicsleeptimer.plus.receivers.SleepNotificationReceiver
 import com.d4rk.musicsleeptimer.plus.services.SleepTileService
 import java.lang.System.currentTimeMillis
 import java.text.DateFormat
@@ -49,9 +51,29 @@ object SleepNotification {
             fun parse(value : String?) : Action? = entries.firstOrNull { it.value == value }
         }
 
-        fun intent(context : Context) : Intent = Intent(context , SleepTileService::class.java).setAction(value)
+        fun intent(context : Context) : Intent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            serviceIntent(context)
+        } else {
+            broadcastIntent(context)
+        }
 
-        fun pendingIntent(context : Context , cancel : Boolean = false) : PendingIntent? = PendingIntent.getService(context , 0 , intent(context) , FLAG_IMMUTABLE).apply { if (cancel) cancel() }
+        @RequiresApi(Build.VERSION_CODES.N)
+        private fun serviceIntent(context : Context) : Intent =
+            Intent(context , SleepTileService::class.java).setAction(value)
+
+        private fun broadcastIntent(context : Context) : Intent =
+            Intent(context , SleepNotificationReceiver::class.java).setAction(value)
+
+        fun pendingIntent(context : Context , cancel : Boolean = false) : PendingIntent? {
+            val requestCode = value.hashCode()
+            val intent = intent(context)
+            val pendingIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                PendingIntent.getService(context , requestCode , intent , FLAG_IMMUTABLE)
+            } else {
+                PendingIntent.getBroadcast(context , requestCode , intent , FLAG_IMMUTABLE)
+            }
+            return pendingIntent.apply { if (cancel) cancel() }
+        }
 
         fun action(context : Context , cancel : Boolean = false) : Notification.Action.Builder = Notification.Action.Builder(
             Icon.createWithResource(context , 0) , title(context) , pendingIntent(context , cancel)
