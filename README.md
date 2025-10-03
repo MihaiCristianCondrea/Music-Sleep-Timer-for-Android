@@ -5,7 +5,7 @@
 Music Sleep Timer Plus
 ==================
 
-**Set your music to stop after you fall asleep effortlessly.**
+**Set your music to stop after you fall asleep and switch outputs effortlessly.**
 
 Drift off to tranquility with Music Sleep Timer Plus, your personal companion for a peaceful night's
 rest. Our app seamlessly blends into your existing audio experience, ensuring that your favorite
@@ -13,8 +13,10 @@ tunes, podcasts, or other content gently fade away as you slumber.
 
 Say goodbye to battery-draining music playback that disrupts your sleep. Music Sleep Timer Plus puts
 you in control, allowing you to set a convenient timer to automatically turn off your audio at a
-specified time. Simply tap the notification tile, select your desired duration, and let the app work
-its magic.
+specified time. Simply tap the Sleep Timer Quick Settings tile, select your desired duration, and
+let
+the app work its magic. Need to switch devices instead? Open the Audio Output tile to jump straight
+to Android's system picker.
 
 Lightweight and Efficient, Compatible with Your Favorite Apps
 
@@ -29,6 +31,7 @@ free and open-source software!
 
 - Set timers by specific time or duration
 - Extend the timer directly from the notification drawer
+- Launch the Android audio output picker from a dedicated Quick Settings tile
 
 # Benefits
 
@@ -47,10 +50,11 @@ free and open-source software!
 
 # How it works
 
-Simply add the Music Sleep Timer Plus notification tile to your Quick Settings bar, tap the
-notification tile to set a timer for your audio playback and choose from a specific time or
-duration. Once the timer is set, Music Sleep Timer Plus will automatically turn off your audio at
-the specified time, ensuring uninterrupted sleep.
+Add the Music Sleep Timer Plus tiles to your Quick Settings bar. Tap the Sleep Timer tile to set a
+timer for your audio playback and choose from a specific time or duration. Once the timer is set,
+Music Sleep Timer Plus will automatically turn off your audio at the specified time, ensuring
+uninterrupted sleep. Need to change where the sound is playing? Use the Audio Output tile to open
+Android's system picker and jump between Bluetooth devices, speakers, and more.
 
 # Get started today
 

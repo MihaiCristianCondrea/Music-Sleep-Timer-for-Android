@@ -1,6 +1,6 @@
 Drift off to tranquility with Music Sleep Timer Plus, your personal companion for a peaceful night's rest. Our app seamlessly blends into your existing audio experience, ensuring that your favorite tunes, podcasts, or other content gently fade away as you slumber.
 
-Say goodbye to battery-draining music playback that disrupts your sleep. Music Sleep Timer Plus puts you in control, allowing you to set a convenient timer to automatically turn off your audio at a specified time. Simply tap the notification tile, select your desired duration, and let the app work its magic.
+Say goodbye to battery-draining music playback that disrupts your sleep. Music Sleep Timer Plus puts you in control, allowing you to set a convenient timer to automatically turn off your audio at a specified time. Simply tap the Sleep Timer Quick Settings tile, select your desired duration, and let the app work its magic. Need to switch devices instead? Open the Audio Output tile to jump straight to Android's system picker.
 
 Lightweight and Efficient, Compatible with Your Favorite Apps
 
@@ -15,9 +15,10 @@ Features
 Benefits
 • Bloat-free design for an uncluttered experience
 • Fast and lightweight, ensuring minimal battery usage
+• Launch Android's audio output picker from a dedicated Quick Settings tile
 
 How it works
-Simply add the Music Sleep Timer Plus notification tile to your Quick Settings bar, tap the notification tile to set a timer for your audio playback and choose from a specific time or duration. Once the timer is set, Music Sleep Timer Plus will automatically turn off your audio at the specified time, ensuring uninterrupted sleep.
+Add the Music Sleep Timer Plus tiles to your Quick Settings bar. Tap the Sleep Timer tile to set a timer for your audio playback and choose from a specific time or duration. Once the timer is set, Music Sleep Timer Plus will automatically turn off your audio at the specified time, ensuring uninterrupted sleep. Want to change where the audio plays? Hit the Audio Output tile to open Android's system dialog and switch between Bluetooth devices, speakers, and more.
 
 Get started today
 Download Music Sleep Timer Plus from the Google Play Store today and start freeing up space and improving the performance of your Android device. It's free and easy to use, and it's the perfect way to keep your device running at its best.
