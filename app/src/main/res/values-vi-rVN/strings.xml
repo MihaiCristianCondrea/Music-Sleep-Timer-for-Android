@@ -2,4 +2,5 @@
 <resources>
     <string name="tile_subtitle">Nhấn để bắt đầu</string>
     <string name="app_description">Đặt nhạc của bạn dừng lại sau khi bạn ngủ thiếp đi</string>
+    <string name="audio_output">Đầu ra âm thanh</string>
 </resources>

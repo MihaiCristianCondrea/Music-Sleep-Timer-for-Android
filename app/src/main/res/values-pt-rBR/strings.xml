@@ -2,4 +2,5 @@
 <resources>
     <string name="app_description">Defina para sua música parar depois que você adormecer.</string>
     <string name="tile_subtitle">Toque para iniciar</string>
+    <string name="audio_output">Saída de áudio</string>
 </resources>

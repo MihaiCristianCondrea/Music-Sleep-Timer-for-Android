@@ -15,8 +15,8 @@ android {
         applicationId = "com.d4rk.musicsleeptimer.plus"
         minSdk = 23
         targetSdk = 36
-        versionCode = 36
-        versionName = "3.0.5"
+        versionCode = 37
+        versionName = "3.1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         @Suppress("UnstableApiUsage")
         androidResources.localeFilters += listOf(
@@ -39,15 +39,19 @@ android {
                 keyAlias = signingProps["KEY_ALIAS"].toString()
                 keyPassword = signingProps["KEY_PASSWORD"].toString()
             }
-        }
-        else {
+        } else {
             android.buildTypes.getByName("release").signingConfig = null
         }
     }
 
     buildTypes {
         release {
-            signingConfig = signingConfigs.getByName("release")
+            val signingFile = rootProject.file("signing.properties")
+            signingConfig = if (signingFile.exists()) {
+                signingConfigs.getByName("release")
+            } else {
+                null
+            }
             isMinifyEnabled = true
             isShrinkResources = true
             isDebuggable = false

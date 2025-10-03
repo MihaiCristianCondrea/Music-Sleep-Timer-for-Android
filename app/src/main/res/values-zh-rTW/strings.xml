@@ -2,4 +2,5 @@
 <resources>
     <string name="app_description">設置您的音樂在入睡後自動停止。</string>
     <string name="tile_subtitle">點擊開始</string>
+    <string name="audio_output">音訊輸出</string>
 </resources>

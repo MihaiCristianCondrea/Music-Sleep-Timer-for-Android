@@ -2,4 +2,5 @@
 <resources>
     <string name="app_description">Set your music to stop after you fall asleep.</string>
     <string name="tile_subtitle">Tap to start</string>
+    <string name="audio_output">Audio Output</string>
 </resources>

@@ -2,4 +2,5 @@
 <resources>
     <string name="app_description">Ustaw, aby muzyka zatrzymywała się po zaśnięciu.</string>
     <string name="tile_subtitle">Naciśnij aby zacząć</string>
+    <string name="audio_output">Wyjście audio</string>
 </resources>

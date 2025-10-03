@@ -2,4 +2,5 @@
 <resources>
     <string name="tile_subtitle">Başlamak için dokun</string>
     <string name="app_description">Müziğinizi uykuya daldıktan sonra duracak şekilde ayarlayın.</string>
+    <string name="audio_output">Ses çıkışı</string>
 </resources>

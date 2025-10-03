@@ -2,4 +2,5 @@
 <resources>
     <string name="app_description">Налаштуйте музику так, щоб вона зупинялася, коли ви засинаєте.</string>
     <string name="tile_subtitle">Торкніться, щоб почати</string>
+    <string name="audio_output">Аудіовихід</string>
 </resources>

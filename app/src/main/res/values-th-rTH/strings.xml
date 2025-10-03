@@ -2,4 +2,5 @@
 <resources>
     <string name="app_description">ตั้งค่าให้เพลงของคุณหยุดหลังจากคุณหลับไปแล้ว</string>
     <string name="tile_subtitle">แตะเพื่อเริ่ม</string>
+    <string name="audio_output">เอาต์พุตเสียง</string>
 </resources>

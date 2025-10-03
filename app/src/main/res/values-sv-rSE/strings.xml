@@ -2,4 +2,5 @@
 <resources>
     <string name="app_description">Ställ in din musik på att sluta när du har somnat.</string>
     <string name="tile_subtitle">Tryck för att starta</string>
+    <string name="audio_output">Ljudutgång</string>
 </resources>

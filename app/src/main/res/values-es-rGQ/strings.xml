@@ -2,4 +2,5 @@
 <resources>
     <string name="tile_subtitle">Toca para empezar</string>
     <string name="app_description">Configure su música para que se detenga después de quedarse dormido.</string>
+    <string name="audio_output">Salida de audio</string>
 </resources>

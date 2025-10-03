@@ -2,4 +2,5 @@
 <resources>
     <string name="app_description">Настройте музиката си да спира, след като заспите.</string>
     <string name="tile_subtitle">Докоснете, за да започнете</string>
+    <string name="audio_output">Аудио изход</string>
 </resources>

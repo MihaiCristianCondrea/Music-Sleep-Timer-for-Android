@@ -2,4 +2,5 @@
 <resources>
     <string name="tile_subtitle">শুরু করতে আলতো চাপুন</string>
     <string name="app_description">আপনি ঘুমিয়ে পড়ার পরে আপনার সংগীত বন্ধ করুন</string>
+    <string name="audio_output">অডিও আউটপুট</string>
 </resources>

@@ -2,4 +2,5 @@
 <resources>
     <string name="tile_subtitle">Atingeți pentru a începe</string>
     <string name="app_description">Setează-ți muzica să se oprească după ce adormi.</string>
+    <string name="audio_output">Ieșire audio</string>
 </resources>

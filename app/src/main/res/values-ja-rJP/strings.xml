@@ -2,4 +2,5 @@
 <resources>
     <string name="tile_subtitle">タップして開始</string>
     <string name="app_description">眠りについたら音楽を停止するように設定します。</string>
+    <string name="audio_output">オーディオ出力</string>
 </resources>

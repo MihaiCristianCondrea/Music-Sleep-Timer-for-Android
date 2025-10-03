@@ -2,4 +2,5 @@
 <resources>
     <string name="tile_subtitle">شروع کرنے کے لئے ٹیپ کریں</string>
     <string name="app_description">اپنی موسیقی کو آپ کے سو جانے کے بعد رکنے کے لیے سیٹ کریں</string>
+    <string name="audio_output">آڈیو آؤٹ پٹ</string>
 </resources>

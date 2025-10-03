@@ -2,4 +2,5 @@
 <resources>
     <string name="tile_subtitle">Tocca per iniziare</string>
     <string name="app_description">Imposta la tua musica in modo che si fermi dopo che ti addormenti.</string>
+    <string name="audio_output">Uscita audio</string>
 </resources>
