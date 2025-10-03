@@ -62,18 +62,18 @@ class SleepTileService : TileService() {
     private fun requestNotificationsPermission() {
         when {
             SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE -> {
-                val intent = Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS).apply {
+                startActivity(Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS).apply {
                     addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     putExtra(Settings.EXTRA_APP_PACKAGE, packageName)
-                }
-                startActivity(intent)
+                })
             }
 
             SDK_INT >= Build.VERSION_CODES.O -> {
+                @Suppress("DEPRECATION")
                 Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS).apply {
                     addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     putExtra(Settings.EXTRA_APP_PACKAGE , packageName)
-                }.let(::startActivityAndCollapse) // FIXME: 'fun startActivityAndCollapse(intent: Intent!): Unit' is deprecated. Deprecated in Java.
+                }.let(::startActivityAndCollapse)
             }
 
             else -> {
@@ -85,5 +85,4 @@ class SleepTileService : TileService() {
             }
         }
     }
-
 }
