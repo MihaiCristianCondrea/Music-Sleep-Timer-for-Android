@@ -1,6 +1,7 @@
 package com.d4rk.musicsleeptimer.plus.services
 
 import android.app.Notification
+import android.app.PendingIntent
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
@@ -27,7 +28,7 @@ import android.os.Build.VERSION_CODES.N as N_SDK_INT
 class SleepTileService : TileService() {
     companion object {
         fun Context.requestTileUpdate() =
-                requestListeningState(this , ComponentName(this , SleepTileService::class.java))
+            requestListeningState(this, ComponentName(this, SleepTileService::class.java))
     }
 
     override fun onStartListening() = refreshTile()
@@ -36,7 +37,7 @@ class SleepTileService : TileService() {
         else -> requestNotificationsPermission()
     }
 
-    override fun onStartCommand(intent : Intent? , flags : Int , startId : Int) : Int {
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         handle(intent)
         requestTileUpdate()
         stopSelfResult(startId)
@@ -44,7 +45,7 @@ class SleepTileService : TileService() {
     }
 
     private fun refreshTile() = qsTile?.run {
-        when (val notification : Notification? = find()) {
+        when (val notification: Notification? = find()) {
             null -> {
                 state = STATE_INACTIVE
                 if (SDK_INT >= Q) subtitle = resources.getText(R.string.tile_subtitle)
@@ -53,7 +54,7 @@ class SleepTileService : TileService() {
             else -> {
                 state = STATE_ACTIVE
                 if (SDK_INT >= Q) subtitle =
-                        getTimeInstance(SHORT).format(Date(notification.`when`))
+                    getTimeInstance(SHORT).format(Date(notification.`when`))
             }
         }
         updateTile()
@@ -62,17 +63,23 @@ class SleepTileService : TileService() {
     private fun requestNotificationsPermission() {
         when {
             SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE -> {
-                startActivity(Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS).apply {
-                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                    putExtra(Settings.EXTRA_APP_PACKAGE, packageName)
-                })
+                startActivityAndCollapse(
+                    PendingIntent.getActivity(
+                        this, 0,
+                        Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS).apply {
+                            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                            putExtra(Settings.EXTRA_APP_PACKAGE, packageName)
+                        },
+                        PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+                    )
+                )
             }
 
             SDK_INT >= Build.VERSION_CODES.O -> {
                 @Suppress("DEPRECATION")
                 Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS).apply {
                     addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                    putExtra(Settings.EXTRA_APP_PACKAGE , packageName)
+                    putExtra(Settings.EXTRA_APP_PACKAGE, packageName)
                 }.let(::startActivityAndCollapse)
             }
 
