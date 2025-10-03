@@ -1,7 +1,7 @@
 # Version 3.1.0:
 
 - **New**: Added new translations so the app now speaks Arabic (Egypt), Bengali (Bangladesh), Spanish (Mexico), Filipino (Philippines), Korean (South Korea), Urdu (Pakistan), and Vietnamese (Vietnam).
-- **New**: Added a new Audio Output Switcher to open the native Android audio output switcher when is not abialabile.
+- **New**: Added a new Audio Output Switcher to open the native Android audio output switcher when is not available.
 - **Minor**: Updated our build tools and libraries to keep everything running smoothly.
 - **Minor**: Improved our analytics setup for better crash reporting.
 
