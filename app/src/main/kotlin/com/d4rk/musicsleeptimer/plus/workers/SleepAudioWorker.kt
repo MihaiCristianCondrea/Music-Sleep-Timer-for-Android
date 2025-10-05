@@ -67,14 +67,14 @@ class SleepAudioWorker(
         val canAdjustVolume: Boolean = !audioManager.isVolumeFixed && initialVolume > 0
 
         val playbackStoppedLatch = CountDownLatch(1)
-        val focusRequest: AudioFocusRequest = audioManager.buildFocusRequest(
+        val focusRequest: AudioFocusRequest = buildFocusRequest(
             attributes = attributes,
             playbackStoppedLatch = playbackStoppedLatch
         )
 
         var playbackCallback: AudioManager.AudioPlaybackCallback? = null
-        var focusGranted: Boolean = false
-        var playbackStopped: Boolean = false
+        var focusGranted = false
+        var playbackStopped = false
 
         return try {
             playbackCallback = audioManager.registerPlaybackStopCallback(playbackStoppedLatch)
@@ -106,10 +106,10 @@ class SleepAudioWorker(
             playbackStopped = playbackStopped || !audioManager.isMusicActive
 
             Result.success()
-        } catch (interrupted: InterruptedException) {
+        } catch (_: InterruptedException) {
             Thread.currentThread().interrupt()
             Result.failure()
-        } catch (error: Throwable) {
+        } catch (_: Throwable) {
             Result.failure()
         } finally {
             playbackCallback?.let(audioManager::unregisterAudioPlaybackCallback)
@@ -133,7 +133,7 @@ class SleepAudioWorker(
             .build()
     }
 
-    private fun AudioManager.buildFocusRequest(
+    private fun buildFocusRequest(
         attributes: AudioAttributes,
         playbackStoppedLatch: CountDownLatch
     ): AudioFocusRequest {
@@ -157,10 +157,6 @@ class SleepAudioWorker(
     private fun AudioManager.registerPlaybackStopCallback(
         playbackStoppedLatch: CountDownLatch
     ): AudioManager.AudioPlaybackCallback? {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
-            return null
-        }
-
         val callback = object : AudioManager.AudioPlaybackCallback() {
             override fun onPlaybackConfigChanged(configs: MutableList<AudioPlaybackConfiguration>) {
                 if (configs.none(::isRelevantPlaybackActive)) {

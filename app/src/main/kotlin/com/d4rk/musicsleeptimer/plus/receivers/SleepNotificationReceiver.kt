@@ -4,7 +4,6 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import com.d4rk.musicsleeptimer.plus.notifications.SleepNotification
-import com.d4rk.musicsleeptimer.plus.notifications.SleepNotification.handle
 
 class SleepNotificationReceiver : BroadcastReceiver() {
     override fun onReceive(context : Context , intent : Intent?) {
