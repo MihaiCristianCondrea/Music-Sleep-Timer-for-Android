@@ -8,7 +8,6 @@ import android.media.AudioDeviceInfo
 import android.media.AudioFocusRequest
 import android.media.AudioManager
 import android.media.AudioPlaybackConfiguration
-import android.media.audiopolicy.AudioVolumeGroup
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
@@ -64,7 +63,6 @@ class SleepAudioWorker(
         }
 
         val attributes: AudioAttributes = mediaAudioAttributes()
-        val volumeGroupId: Int = audioManager.volumeGroupIdFor(attributes)
         val initialVolume: Int = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC)
         val canAdjustVolume: Boolean = !audioManager.isVolumeFixed && initialVolume > 0
 
@@ -85,7 +83,7 @@ class SleepAudioWorker(
                 AudioManager.AUDIOFOCUS_REQUEST_GRANTED
 
             if (canAdjustVolume) {
-                audioManager.fadeOutPlayback(volumeGroupId)
+                audioManager.fadeOutPlayback()
             }
 
             if (focusGranted) {
@@ -143,9 +141,8 @@ class SleepAudioWorker(
             .setAudioAttributes(attributes)
             .setAcceptsDelayedFocusGain(false)
             .setWillPauseWhenDucked(true)
-            .setLocksFocus(true)
             .setOnAudioFocusChangeListener(
-                { focusChange ->
+                { focusChange: Int ->
                     if (focusChange == AudioManager.AUDIOFOCUS_LOSS ||
                         focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT
                     ) {
@@ -177,7 +174,7 @@ class SleepAudioWorker(
     }
 
     private fun isRelevantPlaybackActive(config: AudioPlaybackConfiguration): Boolean {
-        if (config.playerState != AudioPlaybackConfiguration.PLAYER_STATE_STARTED) {
+        if (!config.isActive) {
             return false
         }
 
@@ -190,16 +187,9 @@ class SleepAudioWorker(
         }
     }
 
-    private fun AudioManager.fadeOutPlayback(volumeGroupId: Int) {
+    private fun AudioManager.fadeOutPlayback() {
         if (isVolumeFixed || getStreamVolume(AudioManager.STREAM_MUSIC) == 0) {
             return
-        }
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE &&
-            volumeGroupId != AudioVolumeGroup.DEFAULT_VOLUME_GROUP &&
-            isVolumeGroupMuted(volumeGroupId)
-        ) {
-            adjustVolumeGroupVolume(volumeGroupId, AudioManager.ADJUST_UNMUTE, 0)
         }
 
         var steps = 0
@@ -207,28 +197,14 @@ class SleepAudioWorker(
             steps < MAX_FADE_STEPS &&
             !Thread.currentThread().isInterrupted
         ) {
-            lowerVolumeStep(volumeGroupId)
+            lowerVolumeStep()
             steps++
             this@SleepAudioWorker.sleepFor(FADE_STEP_MILLIS)
         }
     }
 
-    private fun AudioManager.lowerVolumeStep(volumeGroupId: Int) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE &&
-            volumeGroupId != AudioVolumeGroup.DEFAULT_VOLUME_GROUP
-        ) {
-            adjustVolumeGroupVolume(volumeGroupId, AudioManager.ADJUST_LOWER, 0)
-        } else {
-            adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_LOWER, 0)
-        }
-    }
-
-    private fun AudioManager.volumeGroupIdFor(attributes: AudioAttributes): Int {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
-            getVolumeGroupIdForAttributes(attributes)
-        } else {
-            AudioVolumeGroup.DEFAULT_VOLUME_GROUP
-        }
+    private fun AudioManager.lowerVolumeStep() {
+        adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_LOWER, 0)
     }
 
     private fun AudioManager.hasControllableOutputDevice(): Boolean {
