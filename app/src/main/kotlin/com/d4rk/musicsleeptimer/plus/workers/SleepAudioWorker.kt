@@ -174,7 +174,7 @@ class SleepAudioWorker(
     }
 
     private fun isRelevantPlaybackActive(config: AudioPlaybackConfiguration): Boolean {
-        if (!config.isActive) {
+        if (!config.isPlaybackActiveCompat()) {
             return false
         }
 
@@ -185,6 +185,37 @@ class SleepAudioWorker(
             AudioAttributes.USAGE_ASSISTANCE_ACCESSIBILITY -> true
             else -> false
         }
+    }
+
+    private fun AudioPlaybackConfiguration.isPlaybackActiveCompat(): Boolean {
+        val configurationClass = AudioPlaybackConfiguration::class.java
+
+        val directState = runCatching {
+            configurationClass.getMethod("isActive").invoke(this) as? Boolean
+        }.getOrNull()
+        if (directState != null) {
+            return directState
+        }
+
+        val playerState = runCatching {
+            configurationClass.getMethod("getPlayerState").invoke(this) as? Int
+        }.getOrNull()
+        if (playerState == null) {
+            return true
+        }
+
+        val activeStates = listOfNotNull(
+            runCatching { configurationClass.getField("PLAYER_STATE_STARTED").getInt(null) }
+                .getOrNull(),
+            runCatching { configurationClass.getField("PLAYER_STATE_PLAYING").getInt(null) }
+                .getOrNull()
+        )
+
+        if (activeStates.isEmpty()) {
+            return playerState != 0
+        }
+
+        return activeStates.any { it == playerState }
     }
 
     private fun AudioManager.fadeOutPlayback() {
