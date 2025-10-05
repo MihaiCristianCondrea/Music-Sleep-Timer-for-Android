@@ -239,15 +239,20 @@ class SleepAudioWorker(
     }
 
     private fun AudioManager.hasControllableOutputDevice(): Boolean {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE + 1) {
-            runCatching {
-                getSupportedDeviceTypes(AudioManager.GET_DEVICES_OUTPUTS)
-                    .any { it != AudioDeviceInfo.TYPE_UNKNOWN }
-            }.getOrDefault(false)
+        return if (Build.VERSION.SDK_INT >= 35) {
+            hasSupportedFutureOutputDevice()
         } else {
             getDevices(AudioManager.GET_DEVICES_OUTPUTS)
                 .any { it.type != AudioDeviceInfo.TYPE_UNKNOWN }
         }
+    }
+
+    @RequiresApi(35)
+    private fun AudioManager.hasSupportedFutureOutputDevice(): Boolean {
+        return runCatching {
+            getSupportedDeviceTypes(AudioManager.GET_DEVICES_OUTPUTS)
+                .any { it != AudioDeviceInfo.TYPE_UNKNOWN }
+        }.getOrDefault(false)
     }
 
     @Throws(InterruptedException::class)
