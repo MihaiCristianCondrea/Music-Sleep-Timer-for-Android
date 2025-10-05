@@ -11,6 +11,8 @@ import android.media.AudioPlaybackConfiguration
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
+import android.os.SystemClock
+import android.view.KeyEvent
 import androidx.annotation.RequiresApi
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequest
@@ -32,6 +34,7 @@ class SleepAudioWorker(
         private val FADE_STEP_MILLIS : Long = TimeUnit.SECONDS.toMillis(1)
         private val RESTORE_VOLUME_MILLIS : Long = TimeUnit.SECONDS.toMillis(2)
         private val WAIT_FOR_PLAYBACK_STOP_MILLIS : Long = TimeUnit.SECONDS.toMillis(4)
+        private val MEDIA_KEY_WAIT_MILLIS : Long = TimeUnit.MILLISECONDS.toMillis(500)
         private const val MAX_FADE_STEPS : Int = 20
         private const val UNIQUE_WORK_NAME : String = "sleep_audio_work"
         const val ACTION_SLEEP_AUDIO : String = "com.d4rk.musicsleeptimer.plus.action.SLEEP_AUDIO"
@@ -104,6 +107,10 @@ class SleepAudioWorker(
 
             sleepFor(RESTORE_VOLUME_MILLIS)
             playbackStopped = playbackStopped || !audioManager.isMusicActive
+
+            if (!playbackStopped) {
+                playbackStopped = audioManager.forceStopPlayback()
+            }
 
             Result.success()
         } catch (_: InterruptedException) {
@@ -232,6 +239,37 @@ class SleepAudioWorker(
 
     private fun AudioManager.lowerVolumeStep() {
         adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_LOWER, 0)
+    }
+
+    private fun AudioManager.forceStopPlayback(): Boolean {
+        // Some media apps ignore transient audio focus loss. Use media key events as a
+        // last resort to request a pause/stop through the same channel as hardware keys.
+        val keyCodes = listOf(
+            KeyEvent.KEYCODE_MEDIA_PAUSE,
+            KeyEvent.KEYCODE_MEDIA_STOP,
+            KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE
+        )
+
+        for (keyCode in keyCodes) {
+            if (Thread.currentThread().isInterrupted) {
+                break
+            }
+
+            val eventTime = SystemClock.uptimeMillis()
+            val downEvent = KeyEvent(eventTime, eventTime, KeyEvent.ACTION_DOWN, keyCode, 0)
+            val upEvent = KeyEvent(eventTime, eventTime, KeyEvent.ACTION_UP, keyCode, 0)
+
+            runCatching { dispatchMediaKeyEvent(downEvent) }
+            runCatching { dispatchMediaKeyEvent(upEvent) }
+
+            this@SleepAudioWorker.sleepFor(MEDIA_KEY_WAIT_MILLIS)
+
+            if (!isMusicActive) {
+                return true
+            }
+        }
+
+        return !isMusicActive
     }
 
     private fun AudioManager.hasControllableOutputDevice(): Boolean {
