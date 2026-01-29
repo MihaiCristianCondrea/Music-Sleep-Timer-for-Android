@@ -1,3 +1,7 @@
+# Version 3.1.1:
+
+- **Minor**: Under-the-hood improvements for a better overall app experience.
+
 # Version 3.1.0:
 
 - **New**: Added new translations so the app now speaks Arabic (Egypt), Bengali (Bangladesh), Spanish (Mexico), Filipino (Philippines), Korean (South Korea), Urdu (Pakistan), and Vietnamese (Vietnam).

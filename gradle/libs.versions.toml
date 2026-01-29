@@ -1,12 +1,10 @@
 [versions]
-agp = "8.13.0"
+agp = "9.0.0"
 appcompat = "1.7.1"
-firebaseBom = "34.3.0"
-kotlin = "2.2.20"
+firebaseBom = "34.8.0"
 google-firebase-crashlytics = "3.0.6"
-google-services = "4.4.3"
-multidex = "2.0.1"
-workRuntimeKtx = "2.10.5"
+google-services = "4.4.4"
+workRuntimeKtx = "2.11.1"
 
 [libraries]
 appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
@@ -14,12 +12,10 @@ firebase-analytics-ktx = { module = "com.google.firebase:firebase-analytics" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
 firebase-crashlytics-ktx = { module = "com.google.firebase:firebase-crashlytics" }
 firebase-perf = { module = "com.google.firebase:firebase-perf" }
-multidex = { module = "androidx.multidex:multidex", version.ref = "multidex" }
 work-runtime-ktx = { module = "androidx.work:work-runtime-ktx", version.ref = "workRuntimeKtx" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
-jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 googlePlayServices = { id = "com.google.gms.google-services", version.ref = "google-services" }
 googleFirebase = { id = "com.google.firebase.crashlytics", version.ref = "google-firebase-crashlytics" }

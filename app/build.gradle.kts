@@ -1,9 +1,9 @@
+import com.google.firebase.crashlytics.buildtools.gradle.CrashlyticsExtension
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import java.util.Properties
 
 plugins {
     alias(notation = libs.plugins.androidApplication)
-    alias(notation = libs.plugins.jetbrainsKotlinAndroid)
     alias(notation = libs.plugins.googlePlayServices)
     alias(notation = libs.plugins.googleFirebase)
 }
@@ -15,8 +15,8 @@ android {
         applicationId = "com.d4rk.musicsleeptimer.plus"
         minSdk = 23
         targetSdk = 36
-        versionCode = 38
-        versionName = "3.1.0"
+        versionCode = 39
+        versionName = "3.1.1"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         @Suppress("UnstableApiUsage")
         androidResources.localeFilters += listOf(
@@ -80,6 +80,9 @@ android {
             isMinifyEnabled = true
             isShrinkResources = true
             isDebuggable = false
+            configure<CrashlyticsExtension> {
+                mappingFileUploadEnabled = true
+            }
         }
         debug {
             isDebuggable = true
@@ -131,5 +134,4 @@ dependencies {
     implementation(dependencyNotation = libs.firebase.perf)
     implementation(dependencyNotation = libs.appcompat)
     implementation(dependencyNotation = libs.work.runtime.ktx)
-    implementation(dependencyNotation = libs.multidex)
 }
